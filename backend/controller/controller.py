@@ -7,4 +7,4 @@ service = GenService()
 
 @gen_controller_endpoints.route("/api", methods=["GET"])
 def test_endpoint():
-    return {"name": "API"}
+    return {"name": "Controller Registered"}
