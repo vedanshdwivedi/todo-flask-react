@@ -21,17 +21,41 @@ export const TodoPage = () => {
   };
 
   const handleFormSubmit = () => {
-    fetch("api/create", {
+    console.log(addTodo);
+    fetch("/write", {
       method: "POST",
       body: JSON.stringify({
-        content: addTodo,
+        keyword: addTodo,
       }),
-    });
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((message) => {
+        console.log(message);
+        setAddTodo("");
+        getLatestTodos();
+      });
+  };
+
+  const getLatestTodos = () => {
+    fetch("/api")
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((data) => setTodo(data));
   };
 
   return (
     <>
-      <Form userInput={addTodo} onFormChange={handleFormChange} onFormSubmit={handleFormSubmit} />
+      <Form
+        userInput={addTodo}
+        onFormChange={handleFormChange}
+        onFormSubmit={handleFormSubmit}
+      />
       <Card listOfTodos={todo} />
     </>
   );

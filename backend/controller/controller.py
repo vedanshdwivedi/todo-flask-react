@@ -9,8 +9,8 @@ service = GenService()
 def test_endpoint():
     return {"name": "Controller Registered"}
 
-@gen_controller_endpoints.route("/write", methods=["GET"])
-def write(data: str):
+@gen_controller_endpoints.route("/write", methods=["POST"])
+def write():
     data = request.json["keyword"]
     resp = service.write_data(data)
     return jsonify(resp)
