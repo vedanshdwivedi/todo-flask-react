@@ -20,8 +20,23 @@ export const TodoPage = () => {
     setAddTodo(inputValue);
   };
 
+  const handleDelete = (delete_id) => {
+    fetch("/delete", {
+      method: "POST",
+      body: JSON.stringify({
+        id: delete_id,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((message) => {
+        getLatestTodos();
+      });
+  };
+
   const handleFormSubmit = () => {
-    console.log(addTodo);
     fetch("/write", {
       method: "POST",
       body: JSON.stringify({
@@ -56,7 +71,7 @@ export const TodoPage = () => {
         onFormChange={handleFormChange}
         onFormSubmit={handleFormSubmit}
       />
-      <Card listOfTodos={todo} />
+      <Card listOfTodos={todo} onClick={handleDelete} />
     </>
   );
 };

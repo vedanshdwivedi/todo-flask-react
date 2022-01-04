@@ -17,14 +17,15 @@ export const Form = ({ userInput, onFormChange, onFormSubmit }) => {
           <label>Keyword</label>
           <input
             type="text"
-            id="staticEmail2"
             value={userInput}
             required
             onChange={handleChange}
           ></input>
         </div>
         <div>
-          <button type="submit">Submit</button>
+          <button type="submit">
+            Submit
+          </button>
         </div>
       </form>
     </>

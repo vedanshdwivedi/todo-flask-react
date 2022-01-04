@@ -1,4 +1,5 @@
 
+import re
 from service.base_service import BaseService
 from dao.gen_dao import GenDao
 
@@ -10,6 +11,13 @@ class GenService(BaseService):
     def write_data(self, data: str) -> str:
         try:
             self.gen_dao.add_keyword_to_db(data)
+            return "Success"
+        except Exception as ex:
+            return str(ex)
+
+    def delete_data(self, data: int) -> str:
+        try:
+            self.gen_dao.delete_data_from_db(data)
             return "Success"
         except Exception as ex:
             return str(ex)

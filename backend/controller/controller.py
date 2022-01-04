@@ -14,9 +14,18 @@ def write():
     data = request.json["keyword"]
     resp = service.write_data(data)
     return jsonify(resp)
+
+
+@gen_controller_endpoints.route("/delete", methods=["POST"])
+def delete():
+    data = int(request.json["id"])
+    resp = service.delete_data(data)
+    return jsonify(resp)
         
 
 
 @gen_controller_endpoints.route("/api", methods=["GET"])
 def read():
-    return jsonify(service.read_data())
+    data = service.read_data()
+    print(data)
+    return jsonify(data)

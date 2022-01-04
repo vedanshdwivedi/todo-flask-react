@@ -4,8 +4,6 @@ import pickle
 class BaseDao:
     id_list = []
     max_id = None
-    write_count = 0
-    max_write_count = 10
 
     def __init__(self, path="./dao/data.pickle") -> None:
         self.path = path
@@ -30,13 +28,27 @@ class BaseDao:
             self.max_id += 1
         return self.max_id
 
+    def create_a_local_copy(self):
+        with open(self.path, 'wb') as f:
+            pickle.dump(self.database, f)
+
     def add_keyword_to_db(self, keyword: str) -> None:
         self.database.append({"item": keyword, "id": self.get_next_id()})
-        self.write_count += 1
-        if self.write_count == self.max_write_count:
-            with open(self.path, 'wb') as f:
-                pickle.dump(self.database, f)
-            self.write_count = 0
+        self.create_a_local_copy()
+        print(self.database)
         return None
+
+    def delete_data_from_db(self, id: int) -> None:
+        i = 0
+        for element in self.database:
+            if element["id"] == id:
+                self.database.pop(i)
+                self.create_a_local_copy()
+                self.id_list.remove(id)
+                break
+            i += 1
+
+    def get_all_data_from_db(self):
+        return self.database
 
             
